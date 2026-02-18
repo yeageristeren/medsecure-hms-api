@@ -2,9 +2,7 @@ package com.codingshuttle.youtube.hospitalManagement.entity;
 
 import com.codingshuttle.youtube.hospitalManagement.entity.type.BloodGroupType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
@@ -16,6 +14,9 @@ import java.util.List;
 @ToString
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(
         name = "patient",
         uniqueConstraints = {
@@ -42,6 +43,10 @@ public class Patient {
     private String email;
 
     private String gender;
+
+    @OneToOne
+    @MapsId
+    private AppUser user;
 
     @CreationTimestamp
     @Column(updatable = false)

@@ -5,6 +5,7 @@ import com.codingshuttle.youtube.hospitalManagement.dto.CreateAppointmentRequest
 import com.codingshuttle.youtube.hospitalManagement.dto.PatientResponseDto;
 import com.codingshuttle.youtube.hospitalManagement.service.AppointmentService;
 import com.codingshuttle.youtube.hospitalManagement.service.PatientService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/patients")
 @RequiredArgsConstructor
+@Tag(name = "Patient APis")
 public class PatientController {
 
     private final PatientService patientService;
