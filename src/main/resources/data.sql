@@ -1,22 +1,32 @@
-INSERT INTO patient (name, gender, birth_date, email, blood_group)
+-- ==========================
+-- USERS
+-- ==========================
+INSERT INTO app_user ( username, password, provider_type)
 VALUES
-    ('Aarav Sharma', 'MALE', '1990-05-10', 'aarav.sharma@example.com', 'O_POSITIVE'),
-    ('Diya Patel', 'FEMALE', '1995-08-20', 'diya.patel@example.com', 'A_POSITIVE'),
-    ('Dishant Verma', 'MALE', '1988-03-15', 'dishant.verma@example.com', 'A_POSITIVE'),
-    ('Neha Iyer', 'FEMALE', '1992-12-01', 'neha.iyer@example.com', 'AB_POSITIVE'),
-    ('Kabir Singh', 'MALE', '1993-07-11', 'kabir.singh@example.com', 'O_POSITIVE');
+    ( 'mohit@gmail.com', 'password123', 'EMAIL'),
+    ( 'rahul@gmail.com', 'password123', 'EMAIL');
 
-INSERT INTO doctor (name, specialization, email)
+-- ==========================
+-- INSURANCE
+-- ==========================
+INSERT INTO insurance (id, policy_number, provider, valid_until, created_at)
 VALUES
-    ('Dr. Rakesh Mehta', 'Cardiology', 'rakesh.mehta@example.com'),
-    ('Dr. Sneha Kapoor', 'Dermatology', 'sneha.kapoor@example.com'),
-    ('Dr. Arjun Nair', 'Orthopedics', 'arjun.nair@example.com');
+    (1, 'POL123456', 'Star Health', '2026-12-31', NOW()),
+    (2, 'POL654321', 'HDFC Ergo', '2027-06-30', NOW());
 
-INSERT INTO appointment (appointment_time, reason, doctor_id, patient_id)
+-- ==========================
+-- PATIENT
+-- ==========================
+INSERT INTO patient (
+    user_id,
+    name,
+    birth_date,
+    email,
+    gender,
+    created_at,
+    blood_group,
+    patient_insurance_id
+)
 VALUES
-  ('2025-07-01 10:30:00', 'General Checkup', 1, 2),
-  ('2025-07-02 11:00:00', 'Skin Rash', 2, 2),
-  ('2025-07-03 09:45:00', 'Knee Pain', 3, 3),
-  ('2025-07-04 14:00:00', 'Follow-up Visit', 1, 1),
-  ('2025-07-05 16:15:00', 'Consultation', 1, 4),
-  ('2025-07-06 08:30:00', 'Allergy Treatment', 2, 5);
+    (1, 'Mohit Sharma', '2003-03-25', 'mohit@gmail.com', 'Male', NOW(), 'O_POSITIVE', 1),
+    (2, 'Rahul Verma', '2002-07-14', 'rahul@gmail.com', 'Male', NOW(), 'A_POSITIVE', 2);
