@@ -45,7 +45,7 @@ public class Doctor extends Auditable {
     private String email;
 
     @Column(nullable = false)
-    private boolean available = true;
+    private boolean deleted = false;
 
     @ManyToMany(mappedBy = "doctors")
     @ToString.Exclude

@@ -2,10 +2,7 @@ package com.medsecure.appointment.dto;
 
 import com.medsecure.doctor.dto.DoctorResponseDto;
 import com.medsecure.patient.dto.PatientResponseDto;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +10,8 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AppointmentResponseDto {
     private Long id;
     private LocalDateTime appointmentTime;

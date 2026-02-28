@@ -15,5 +15,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     Page<Appointment> getAppointmentsByDoctor_Id(Long doctorId, Pageable pageable);
 
-    boolean existsByAppointmentTimeAndDoctorAndStatusIn(LocalDateTime appointmentTime, Doctor doctor, List<AppointmentStatus> pending);
+    boolean existsByAppointmentTimeAndDoctor_IdAndStatusIn(LocalDateTime appointmentTime, Long doctorId, List<AppointmentStatus> pending);
+
+
+    Long countAppointmentByAppointmentTimeBetween(LocalDateTime localDateTime, LocalDateTime localDateTime1);
 }

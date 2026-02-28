@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 
 @RestController
@@ -45,7 +46,7 @@ public class PatientController {
     }
 
     @PatchMapping("/appointment/{id}/cancel")
-    public ResponseEntity<Void> cancelAppointment(@PathVariable Long id){
+    public ResponseEntity<Void> cancelAppointment(@PathVariable Long id) throws AccessDeniedException {
         appointmentService.cancelAppointment(id);
         return ResponseEntity.noContent().build();
     }

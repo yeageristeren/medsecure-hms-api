@@ -50,7 +50,7 @@ public class DoctorService {
         Doctor doctor = Doctor.builder()
                 .name(doctorRequestDto.getName())
                 .email(doctorRequestDto.getEmail())
-                .available(true)
+                .deleted(false)
                 .specialization(doctorRequestDto.getSpecialization())
                 .build();
         doctor.setUser(user);
@@ -60,7 +60,7 @@ public class DoctorService {
     }
 
     public Page<DoctorResponseDto> findAvailBySpec(String specialisation, Pageable pageable) {
-        Page<Doctor> doctors = doctorRepository.findBySpecializationAndAvailable(specialisation,true,pageable);
+        Page<Doctor> doctors = doctorRepository.findBySpecializationAndDeleted(specialisation,false,pageable);
         return doctors.map(doctor -> DoctorResponseDto.builder()
                 .email(doctor.getEmail())
                 .id(doctor.getId())

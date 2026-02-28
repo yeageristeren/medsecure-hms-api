@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,10 +53,11 @@ public class AppointmentService {
                 .status(AppointmentStatus.PENDING)
                 .build();
 
-        slotAvailabilityCheck(appointment);
-
         appointment.setPatient(patient);
         appointment.setDoctor(doctor);
+        slotAvailabilityCheck(appointment);
+
+
         patient.getAppointments().add(appointment);
         doctor.getAppointments().add(appointment);// to maintain consistency
 
@@ -69,8 +71,8 @@ public class AppointmentService {
             throw new BusinessException("Appointments can be booked in 30 minutes interval only");
         }
 
-        boolean conflict = appointmentRepository.existsByAppointmentTimeAndDoctorAndStatusIn
-                (appointment.getAppointmentTime(),appointment.getDoctor()
+        boolean conflict = appointmentRepository.existsByAppointmentTimeAndDoctor_IdAndStatusIn
+                (appointment.getAppointmentTime(),appointment.getDoctor().getId()
                         ,List.of(AppointmentStatus.PENDING,AppointmentStatus.CONFIRMED));
         if(conflict){
             throw  new BusinessException("This time slot is already booked");
@@ -115,9 +117,11 @@ public class AppointmentService {
                 .orElseThrow(()-> new EntityNotFoundException
                 ("Appointment not found with id {}"+appointmentId));
 
+
+
         //validate ownership
-        if(appointment.getDoctor().getUser().getUsername()!= SecurityContextHolder.getContext().getAuthentication()
-                .getName()){
+        if(!Objects.equals(appointment.getDoctor().getUser().getUsername(), SecurityContextHolder.getContext().getAuthentication()
+                .getName())){
             throw new AccessDeniedException("You are not allowed to access this appointment");
         }
         validateTransition(appointment.getStatus(),newStatus.status());
@@ -149,8 +153,7 @@ public class AppointmentService {
     public void cancelAppointment(Long id) throws AccessDeniedException {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Appointment not found"));
-        if(appointment.getPatient().getUser().getUsername()!=
-                SecurityContextHolder.getContext().getAuthentication().getName()){
+        if(!Objects.equals(appointment.getPatient().getUser().getUsername(), SecurityContextHolder.getContext().getAuthentication().getName())){
             throw new AccessDeniedException("Cannot cancel other patient's appointment with id "+id.toString());
         }
         if(appointment.getStatus() == AppointmentStatus.COMPLETED){

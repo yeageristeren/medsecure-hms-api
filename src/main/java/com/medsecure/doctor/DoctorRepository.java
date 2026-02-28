@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Page<Doctor> findAll(Pageable pageable);
 
-    Page<Doctor> findBySpecializationAndAvailable(String specialisation, boolean b, Pageable pageable);
+    Page<Doctor> findBySpecializationAndDeleted(String specialisation, boolean b, Pageable pageable);
 }

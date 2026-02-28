@@ -60,10 +60,6 @@ public class Patient extends Auditable {
     @Column(nullable = false)
     private boolean deleted = false;
 
-    @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
     @Enumerated(EnumType.STRING)
     private BloodGroupType bloodGroup;
 

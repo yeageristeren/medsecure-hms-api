@@ -2,6 +2,7 @@ package com.medsecure.admin;
 
 import com.medsecure.appointment.AppointmentService;
 import com.medsecure.appointment.dto.AppointmentResponseDto;
+import com.medsecure.common.dto.SystemStatsDto;
 import com.medsecure.common.response.ApiResponse;
 import com.medsecure.doctor.dto.DoctorResponseDto;
 import com.medsecure.patient.dto.PatientResponseDto;
@@ -30,10 +31,12 @@ public class AdminController {
     private final DoctorService doctorService;
     private final PatientRepository patientRepository;
     private final AppointmentService appointmentService;
+    private final DashboardService dashboardService;
 
     @GetMapping("/dashboard")
-    public ResponseEntity<ApiResponse<DashboardResponseDto>> getDashboard(){
-
+    public ResponseEntity<ApiResponse<SystemStatsDto>> getDashboard(){
+        return ResponseEntity.ok(ApiResponse.success(dashboardService.getSystemStats()
+                ,"Admin Dashboard..."));
     }
 
     @GetMapping("/patients")
